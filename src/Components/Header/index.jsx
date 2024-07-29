@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.png';
 import Country from './Country';
 import { Badge, Button } from '@mui/material';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import SearchBox from './SearchBox';
+import Navbar from './Navbar';
 
 const Header = () => {
 	return (
@@ -33,15 +34,7 @@ const Header = () => {
 								<Country />
 
 								{/* Header Search */}
-								<div className="headerSearch">
-									<input type="text" placeholder="Search For Products...." />
-									<Button>
-										<SearchOutlinedIcon
-											className="mx-auto text-black"
-											style={{ fontSize: '30px' }}
-										/>
-									</Button>
-								</div>
+								<SearchBox />
 
 								{/* Crat and profile */}
 								<div className="part3 d-flex align-items-center">
@@ -64,6 +57,9 @@ const Header = () => {
 						</div>
 					</div>
 				</header>
+
+				{/* Navbar */}
+				<Navbar />
 			</div>
 		</>
 	);

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
 
 * {
 	margin: 0;
@@ -114,4 +115,57 @@ header .headerSearch button {
 
 .cart {
 	margin-left: 10px !important;
+}
+
+/* navbar */
+.navPart1 button {
+	border-radius: 30px !important;
+	padding: 10px 20px;
+	background-color: #2bbef9;
+}
+
+.navPart1 button:hover {
+	background-color: #2bbef9;
+}
+
+.navPart1 .text {
+	font-weight: 700 !important;
+	font-size: 14px;
+}
+
+.menu {
+	margin-right: 10px;
+}
+.expand {
+	margin-left: 5px;
+}
+
+.navPart2 ul {
+	margin: 0;
+}
+
+.navPart2 ul li button {
+	color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.navPart2 ul li button:hover {
+	background-color: #fff !important;
+	color: #2bbef9 !important;
+}
+
+.navPart2 ul li a {
+	font-size: 16px;
+	font-weight: 600;
+	text-decoration: none;
+	color: rgba(0, 0, 0, 0.8) !important;
+	text-transform: uppercase;
+	font-family: 'Dosis', sans-serif;
+	display: flex;
+	align-items: center;
+	padding: 8px 6px;
+}
+
+.navPart2 ul li a:hover {
+	background-color: #fff !important;
+	color: #2bbef9 !important;
 }
