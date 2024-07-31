@@ -69,7 +69,7 @@ body {
 
 /* Search Bar */
 
-header .headerSearch {
+.headerSearch {
 	width: 60%;
 	height: 60px;
 	background: #f3f4f7;
@@ -80,7 +80,19 @@ header .headerSearch {
 	position: relative;
 }
 
-header .headerSearch input {
+.modalHeaderSearch {
+	width: 95%;
+	height: 60px;
+	background: #f3f4f7;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+	position: relative;
+}
+
+.headerSearch input,
+.modalHeaderSearch input {
 	background-color: transparent !important;
 	outline: none !important;
 	font-size: 14px;
@@ -91,7 +103,8 @@ header .headerSearch input {
 	padding: 0 20px;
 }
 
-header .headerSearch button {
+.headerSearch button,
+.modalHeaderSearch button {
 	position: absolute;
 	top: 10px;
 	right: 15px;
@@ -168,4 +181,33 @@ header .headerSearch button {
 .navPart2 ul li a:hover {
 	background-color: #fff !important;
 	color: #2bbef9 !important;
+}
+
+/* Dialog */
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+	padding: 20px !important;
+}
+
+.upazila {
+	margin-bottom: 0;
+	max-height: 400px !important;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	margin-top: 20px;
+}
+
+.upazila li {
+	width: 100% !important;
+	list-style: none;
+}
+
+.upazila li button {
+	width: 100%;
+	text-transform: capitalize;
+	color: #2e2e2e !important;
+	font-size: 16px;
+	justify-content: flex-start;
+	padding: 10px 10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	font-family: 'Dosis', sans-serif;
 }
