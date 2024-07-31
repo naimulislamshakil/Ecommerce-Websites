@@ -131,20 +131,6 @@ body {
 }
 
 /* navbar */
-.navPart1 button {
-	border-radius: 30px !important;
-	padding: 10px 20px;
-	background-color: #2bbef9;
-}
-
-.navPart1 button:hover {
-	background-color: #2bbef9;
-}
-
-.navPart1 .text {
-	font-weight: 700 !important;
-	font-size: 14px;
-}
 
 .menu {
 	margin-right: 10px;
@@ -201,7 +187,8 @@ body {
 	list-style: none;
 }
 
-.upazila li button {
+.upazila li button,
+.subMenu button {
 	width: 100%;
 	text-transform: capitalize;
 	color: #2e2e2e !important;
@@ -210,4 +197,25 @@ body {
 	padding: 10px 10px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	font-family: 'Dosis', sans-serif;
+}
+
+.navPart2 ul li {
+	position: relative !important;
+}
+
+.navPart2 ul li .subMenu {
+	position: absolute;
+	top: 100%;
+	left: 0px;
+	min-width: 300px;
+	background-color: #fff;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s ease-in-out;
+}
+
+.navPart2 ul li:hover .subMenu {
+	opacity: 1;
+	visibility: inherit;
+	top: 100%;
 }
