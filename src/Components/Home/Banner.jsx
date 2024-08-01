@@ -6,8 +6,17 @@ import SliedBanner4 from '../../images/slideBanner4.jpg';
 import SliedBanner5 from '../../images/slideBanner5.jpg';
 import SliedBanner6 from '../../images/slideBanner6.jpg';
 import SliedBanner7 from '../../images/slideBanner7.jpg';
+import Slider from 'react-slick';
 
 const Banner = () => {
+	var settings = {
+		dots: false,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		autoplay: true,
+	};
 	const banners = [
 		{
 			img: SliedBanner1,
@@ -32,8 +41,18 @@ const Banner = () => {
 		},
 	];
 	return (
-		<div className="container-fluid">
-			<img src={SliedBanner5} className="w-100" alt="" />
+		<div className="homeBanner">
+			<div className="container-fluid">
+				{/* <img src={SliedBanner5} className="w-100" alt="" /> */}
+
+				<Slider {...settings}>
+					{banners.map((banner, i) => (
+						<div key={i}>
+							<img src={banner?.img} className="w-100" alt="" />
+						</div>
+					))}
+				</Slider>
+			</div>
 		</div>
 	);
 };

@@ -21,6 +21,8 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.2",
     "react-swipeable-views": "^0.14.0",
+    "slick-carousel": "^1.8.1",
+    "slick-slider": "^1.8.2",
     "styled-components": "^6.1.12",
     "web-vitals": "^2.1.4"
   },
