@@ -8,6 +8,7 @@
 
 body {
 	font-family: 'Lato', sans-serif;
+	color: rgba(0, 0, 0, 0.5);
 }
 
 .primary-font {
@@ -239,7 +240,7 @@ body {
 	overflow: hidden;
 }
 
-.homeBanner *{
+.homeBanner * {
 	outline: none !important;
 }
 
@@ -253,4 +254,65 @@ body {
 
 .view-all a {
 	font-size: 12px !important;
+}
+
+.title {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.cardWrraper {
+	position: relative;
+}
+
+.custom-badge {
+	position: absolute;
+	background-color: #2bbef9;
+	padding: 0px 15px;
+	border-radius: 45px;
+	color: #fff;
+	font-size: 14px;
+	top: 13px;
+	left: 10px;
+}
+
+.hover-icon {
+	background-color: #fff;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.4);
+	width: 20px;
+	height: 20px;
+	padding: 8px;
+	border-radius: 50%;
+	font-weight: 400;
+}
+
+.cardWrraper:hover .hover-icon-root {
+	opacity: 1 !important;
+	visibility: inherit !important;
+}
+
+.hover-icon:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.imgWrraper {
+	overflow: hidden;
+}
+
+.imgWrraper img {
+	transition: all 0.5s ease-in-out;
+}
+
+.imgWrraper:hover img {
+	transform: scale(1.1);
+}
+
+.hover-icon-root {
+	position: absolute;
+	top: 70px;
+	right: 10px;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.5s ease-in-out;
+	z-index: 100;
 }

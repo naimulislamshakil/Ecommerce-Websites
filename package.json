@@ -24,6 +24,7 @@
     "slick-carousel": "^1.8.1",
     "slick-slider": "^1.8.2",
     "styled-components": "^6.1.12",
+    "swiper": "^11.1.9",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

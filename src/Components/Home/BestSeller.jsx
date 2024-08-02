@@ -3,7 +3,20 @@ import Banner1 from '../../images/banner1.jpg';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import products from '../../Utils/BestSeller';
+import ProductCard from './ProductCard';
+import Slider from 'react-slick';
+
 const BestSeller = () => {
+	var settings = {
+		dots: false,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 3,
+		slidesToScroll: 1,
+		autoplay: true,
+		arrows: true,
+	};
 	return (
 		<div className="container">
 			<div className="row">
@@ -34,6 +47,13 @@ const BestSeller = () => {
 							</Link>
 						</Button>
 					</div>
+
+					{/* best seller product using swiper */}
+					<Slider {...settings}>
+						{products.map((productInfo, i) => (
+							<ProductCard key={i} productInfo={productInfo} />
+						))}
+					</Slider>
 				</div>
 			</div>
 		</div>
