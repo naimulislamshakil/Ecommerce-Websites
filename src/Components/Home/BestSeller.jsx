@@ -12,7 +12,7 @@ const BestSeller = () => {
 		dots: false,
 		infinite: true,
 		speed: 500,
-		slidesToShow: 3,
+		slidesToShow: 4,
 		slidesToScroll: 1,
 		autoplay: true,
 		arrows: true,
@@ -20,10 +20,10 @@ const BestSeller = () => {
 	return (
 		<div className="container">
 			<div className="row">
-				<div className="col-md-3 mt-4">
+				{/* <div className="col-md-3 mt-4">
 					<img src={Banner1} alt="Best Seller Product" className="rounded-2" />
-				</div>
-				<div className="col-md-9 mt-4">
+				</div> */}
+				<div className="col-md-12 mt-4">
 					<div className="d-flex justify-content-between align-items-center">
 						<div>
 							<h3 className="secondary-font text-dark">BEST SELLERS</h3>
