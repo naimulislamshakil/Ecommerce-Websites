@@ -1,35 +1,24 @@
-import React from 'react';
-import Banner1 from '../../images/banner1.jpg';
 import { Button } from '@mui/material';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import products from '../../Utils/BestSeller';
 import ProductCard from './ProductCard';
-import Slider from 'react-slick';
 
-const BestSeller = () => {
-	var settings = {
-		dots: false,
-		infinite: true,
-		speed: 500,
-		slidesToShow: 4,
-		slidesToScroll: 1,
-		autoplay: true,
-		arrows: true,
-	};
+const SpecelOffer = () => {
 	return (
-		<div className="container">
+		<section className="container mb-5">
 			<div className="row">
-				{/* <div className="col-md-3 mt-4">
-					<img src={Banner1} alt="Best Seller Product" className="rounded-2" />
-				</div> */}
-				<div className="col-md-12 mt-4">
+				<div className="col-sm-12">
 					<div className="d-flex justify-content-between align-items-center">
 						<div>
-							<h3 className="secondary-font text-dark">BEST SELLERS</h3>
+							<h3 className="secondary-font text-dark text-uppercase">
+								Special Offers{' '}
+								<strong className="text-danger">of the week!</strong>
+							</h3>
 							<p
 								className="text-black-50"
-								style={{ fontSize: '14px', lineHeight: '.5px' }}
+								style={{ fontSize: '14px', lineHeight: '0.8px' }}
 							>
 								Do not miss the current offers until the end of March.
 							</p>
@@ -48,16 +37,19 @@ const BestSeller = () => {
 						</Button>
 					</div>
 
-					{/* best seller product using swiper */}
-					<Slider {...settings}>
+					{/* Shop Product */}
+
+					<div className="row">
 						{products.map((productInfo, i) => (
-							<ProductCard key={i} productInfo={productInfo} />
+							<div className="col-md-3 mx-auto" key={i}>
+								<ProductCard productInfo={productInfo} />
+							</div>
 						))}
-					</Slider>
+					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 
-export default BestSeller;
+export default SpecelOffer;
