@@ -40,7 +40,7 @@ const SpecelOffer = () => {
 					{/* Shop Product */}
 
 					<div className="row">
-						{products.map((productInfo, i) => (
+						{products?.slice(0, 8)?.map((productInfo, i) => (
 							<div className="col-md-3 mx-auto" key={i}>
 								<ProductCard productInfo={productInfo} />
 							</div>
