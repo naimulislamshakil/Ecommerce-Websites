@@ -5,6 +5,7 @@ import TakeCare from '../../Components/Home/TakeCare';
 import SpecelOffer from '../../Components/Home/SpecelOffer';
 import FeturePost from '../../Components/Home/FeturePost';
 import FetureProduct from '../../Components/Home/FetureProduct';
+import Save from '../../Components/Home/Save';
 
 const Home = () => {
 	return (
@@ -15,6 +16,7 @@ const Home = () => {
 			<SpecelOffer />
 			<FeturePost />
 			<FetureProduct />
+			<Save />
 		</>
 	);
 };
