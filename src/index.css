@@ -342,6 +342,17 @@ body {
 	z-index: 100;
 }
 
-.headerSearch {
-	width: 60%;
+.phone button {
+	height: 40px !important;
+	width: 40px !important;
+	border-radius: 90px !important;
+}
+
+.phone small {
+	color: rgb(137, 137, 137);
+	
+}
+
+.phone{
+	line-height: 0px;
 }
