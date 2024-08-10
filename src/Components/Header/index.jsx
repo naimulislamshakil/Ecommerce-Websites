@@ -52,25 +52,21 @@ const Header = () => {
 
 											<div className="subMenu shadow rounded">
 												<li>
-													<Button>
-														<Link
-															to="/login"
-															className="text-decoration-none text-dark"
-														>
-															Login
-														</Link>
-													</Button>
+													<Link
+														to="/login"
+														className="text-decoration-none text-dark"
+													>
+														<Button>Login</Button>
+													</Link>
 												</li>
 
 												<li>
-													<Button>
-														<Link
-															to="/register"
-															className="text-decoration-none text-dark"
-														>
-															Register
-														</Link>
-													</Button>
+													<Link
+														to="/register"
+														className="text-decoration-none text-dark"
+													>
+														<Button>Register</Button>
+													</Link>
 												</li>
 											</div>
 										</li>

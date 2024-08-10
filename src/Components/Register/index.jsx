@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
 	return (
 		<section
-			className="container d-flex align-items-center justify-content-center"
+			className="container d-flex align-items-center justify-content-center my-5"
 			style={{ minHeight: '100vh' }}
 		>
 			<div class="card w-50 mx-auto p-5">
@@ -29,6 +30,15 @@ const Register = () => {
 				</form>
 
 				<button className="secondary-font input-btn">Register</button>
+
+				<div className="mt-3">
+					<span
+						className="secondary-font"
+						style={{ fontSize: '16px', letterSpacing: '0.05rem' }}
+					>
+						You Are Already Register. <Link to="/login">Please Login.</Link>
+					</span>
+				</div>
 			</div>
 		</section>
 	);
