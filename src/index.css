@@ -238,11 +238,11 @@ body {
 	font-family: 'Dosis', sans-serif;
 }
 
-.navPart2 ul li {
+ul li {
 	position: relative !important;
 }
 
-.navPart2 ul li .subMenu {
+ul li .subMenu {
 	position: absolute;
 	top: 100%;
 	left: 0px;
@@ -254,7 +254,7 @@ body {
 	z-index: 100;
 }
 
-.navPart2 ul li:hover .subMenu {
+ul li:hover .subMenu {
 	opacity: 1;
 	visibility: inherit;
 	top: 100%;
@@ -350,9 +350,41 @@ body {
 
 .phone small {
 	color: rgb(137, 137, 137);
-	
 }
 
-.phone{
+.phone {
 	line-height: 0px;
+}
+
+/* register */
+
+.input {
+	margin-top: 8px;
+	padding: 13px;
+	outline: none;
+	border: none;
+	background-color: #d8d8d8;
+	border-radius: 5px;
+	color: #414141;
+}
+
+.input-label {
+	font-size: 14px;
+}
+
+.input-btn {
+	margin-top: 25px;
+	padding: 10px;
+	text-transform: uppercase;
+	background-color: #233a95;
+	border: none;
+	color: #fff;
+	letter-spacing: 0.1rem;
+	font-size: 18px;
+	border-radius: 5px;
+	transition: all ease-in-out 0.3s;
+}
+
+.input-btn:hover {
+	background-color: #384b98;
 }

@@ -37,21 +37,54 @@ const Header = () => {
 								<SearchBox />
 
 								{/* Crat and profile */}
-								<div className="part3 d-flex align-items-center">
-									<Button className="profile">
-										<AccountCircleOutlinedIcon
-											style={{ fontSize: '30px' }}
-											className="text-black"
-										/>
-									</Button>
-									<Button className="cart">
-										<Badge badgeContent={4} color="error">
-											<ShoppingBagOutlinedIcon
-												style={{ fontSize: '30px' }}
-												className="text-black"
-											/>
-										</Badge>
-									</Button>
+								<div className="part3">
+									<ul
+										className="d-flex align-items-center justify-content-center list list-inline"
+										style={{ listStyle: 'none' }}
+									>
+										<li className="list-inline-item">
+											<Button className="profile">
+												<AccountCircleOutlinedIcon
+													style={{ fontSize: '30px' }}
+													className="text-black"
+												/>
+											</Button>
+
+											<div className="subMenu shadow rounded">
+												<li>
+													<Button>
+														<Link
+															to="/login"
+															className="text-decoration-none text-dark"
+														>
+															Login
+														</Link>
+													</Button>
+												</li>
+
+												<li>
+													<Button>
+														<Link
+															to="/register"
+															className="text-decoration-none text-dark"
+														>
+															Register
+														</Link>
+													</Button>
+												</li>
+											</div>
+										</li>
+										<li>
+											<Button className="cart">
+												<Badge badgeContent={4} color="error">
+													<ShoppingBagOutlinedIcon
+														style={{ fontSize: '30px' }}
+														className="text-black"
+													/>
+												</Badge>
+											</Button>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</div>
