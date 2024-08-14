@@ -1,7 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
+	const initialState = {
+		name: '',
+		email: '',
+		password: '',
+	};
+	const [formValue, setFormValue] = useState(initialState);
+	const [formError, setFormError] = useState({});
+	const [isSubmit, setIsSubmit] = useState(false);
+
+	const handelChange = (e) => {
+		const { name, value } = e.target;
+		setFormValue({ ...formValue, [name]: value });
+	};
+
+	useEffect(() => {
+		console.log({ formError });
+
+		if (Object.keys(formError).length === 0 && isSubmit) {
+			console.log({ formValue });
+		}
+	}, [formError]);
+
+	const validate = (values) => {
+		const errors = {};
+		const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]/;
+
+		if (!values?.name) {
+			errors.name = 'Name is required';
+		}
+		if (!values?.email) {
+			errors.email = 'Email is required';
+		} else if (!regex.test(values?.email)) {
+			errors.email = 'This is not a valid email';
+		}
+		if (!values?.password) {
+			errors.password = 'Password is required';
+		}
+
+		return errors;
+	};
+
+	const handelSubmit = (e) => {
+		setFormError(validate(formValue));
+		setIsSubmit(true);
+	};
+
 	return (
 		<section
 			className="container d-flex align-items-center justify-content-center my-5"
@@ -12,24 +58,55 @@ const Register = () => {
 					Register
 				</h3>
 
-				<form>
+				<form autoComplete="off">
 					<div class="d-flex flex-column">
 						<label className="primary-font ms-1 input-label">Name *</label>
-						<input type="text" class="input primary-font" />
+						<input
+							type="text"
+							class="input primary-font"
+							name="name"
+							value={formValue?.name}
+							onChange={handelChange}
+						/>
+						<p className="mt-2 w-100 text-danger ms-2 mb-0">
+							{formError?.name}
+						</p>
 					</div>
 					<div class="d-flex flex-column mt-4">
 						<label className="primary-font ms-1 input-label">
 							Email Address *
 						</label>
-						<input type="email" class="input primary-font" />
+						<input
+							type="email"
+							name="email"
+							value={formValue?.email}
+							class="input primary-font"
+							onChange={handelChange}
+						/>
+
+						<p className="mt-2 w-100 text-danger ms-2 mb-0">
+							{formError?.email}
+						</p>
 					</div>
 					<div class="d-flex flex-column mt-4">
 						<label className="primary-font ms-1 input-label">Password *</label>
-						<input type="password" class="input primary-font" />
+						<input
+							type="password"
+							name="password"
+							value={formValue?.password}
+							class="input primary-font"
+							onChange={handelChange}
+						/>
+
+						<p className="mt-2 w-100 text-danger ms-2 mb-0">
+							{formError?.password}
+						</p>
 					</div>
 				</form>
 
-				<button className="secondary-font input-btn">Register</button>
+				<button onClick={handelSubmit} className="secondary-font input-btn">
+					Register
+				</button>
 
 				<div className="mt-3">
 					<span
