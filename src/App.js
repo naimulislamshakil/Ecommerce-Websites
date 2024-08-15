@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './Components/Footer/Footer';
 import Login from './Components/Login';
 import Register from './Components/Register';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 				<Route path="/register" element={<Register />} />
 			</Routes>
 			<Footer />
+			<Toaster />
 		</div>
 	);
 }

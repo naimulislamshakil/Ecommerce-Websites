@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { clearMessage, registerFetch } from '../../Redux/Slice/registerSlice';
+import {
+	errorToast,
+	loadingTost,
+	successLoadingTost,
+	successToast,
+} from '../../Utils/toast';
 
 const Register = () => {
 	const initialState = {
@@ -10,6 +18,22 @@ const Register = () => {
 	const [formValue, setFormValue] = useState(initialState);
 	const [formError, setFormError] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { loading, error, data } = useSelector((state) => state.register);
+
+	console.log({ data, loading, error });
+
+	if (data?.success === true && data?.statusCode === 200) {
+		successToast(data?.message);
+		dispatch(clearMessage());
+		navigate('/login');
+	}
+
+	if (error) {
+		errorToast(error);
+		dispatch(clearMessage());
+	}
 
 	const handelChange = (e) => {
 		const { name, value } = e.target;
@@ -17,8 +41,6 @@ const Register = () => {
 	};
 
 	useEffect(() => {
-		console.log({ formError });
-
 		if (Object.keys(formError).length === 0 && isSubmit) {
 			console.log({ formValue });
 		}
@@ -46,6 +68,7 @@ const Register = () => {
 	const handelSubmit = (e) => {
 		setFormError(validate(formValue));
 		setIsSubmit(true);
+		dispatch(registerFetch(formValue));
 	};
 
 	return (

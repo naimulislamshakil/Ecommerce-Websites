@@ -19,7 +19,13 @@ const initialState = {
 export const registerslice = createSlice({
 	name: 'github_issues',
 	initialState,
-	reducers: {},
+	reducers: {
+		clearMessage: (state) => {
+			console.log({ state });
+			state.error = null;
+			state.data = null;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(registerFetch.pending, (state) => {
@@ -43,5 +49,6 @@ export const registerslice = createSlice({
 	},
 });
 
+export const { clearMessage } = registerslice.actions;
 
 export default registerslice.reducer;
