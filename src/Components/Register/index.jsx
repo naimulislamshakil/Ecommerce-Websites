@@ -30,8 +30,15 @@ const Register = () => {
 		navigate('/login');
 	}
 
-	if (error) {
-		errorToast(error);
+	if (
+		error === 'User Already Exist.' ||
+		data?.error === 'User Already Exist. Please Login..'
+	) {
+		navigate('/login');
+	}
+
+	if (error || (data?.success === false && data?.statusCode !== 200)) {
+		errorToast(error || data?.error);
 		dispatch(clearMessage());
 	}
 

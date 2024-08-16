@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { errorToast, successToast } from '../../Utils/toast';
+import { clearMessage, loginFetch } from '../../Redux/Slice/loginSlice';
 
 const Login = () => {
 	const initialState = {
@@ -10,6 +13,22 @@ const Login = () => {
 	const [formValue, setFormValue] = useState(initialState);
 	const [formError, setFormError] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
+	const dispatch = useDispatch();
+	const navigator = useNavigate();
+	const { loading, error, data } = useSelector((state) => state.login);
+
+	
+
+	if (data?.success === true && data?.statusCode === 200) {
+		successToast(data?.message);
+		dispatch(clearMessage());
+		navigator('/');
+	}
+
+	if (error || (data?.success === false && data?.statusCode !== 200)) {
+		errorToast(error || data?.error);
+		dispatch(clearMessage());
+	}
 
 	const handelChange = (e) => {
 		const { name, value } = e.target;
@@ -41,9 +60,9 @@ const Login = () => {
 	};
 
 	const handelSubmit = (e) => {
-		console.log('object');
 		setFormError(validate(formValue));
 		setIsSubmit(true);
+		dispatch(loginFetch(formValue));
 	};
 
 	return (

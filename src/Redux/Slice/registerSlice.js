@@ -4,10 +4,16 @@ import axios from 'axios';
 export const baseUrl = 'http://localhost:5000';
 
 export const registerFetch = createAsyncThunk('auth/addUser', async (data) => {
-	axios.defaults.withCredentials = true;
-	const responce = await axios.post(`${baseUrl}/api/v1/user/register`, data);
+	const res = await fetch(`${baseUrl}/api/v1/user/register`, {
+		method: 'POST',
+		withCredentials: true,
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(data),
+	});
 
-	return responce.data;
+	const userData = await res.json();
+
+	return userData;
 });
 
 const initialState = {
@@ -21,7 +27,6 @@ export const registerslice = createSlice({
 	initialState,
 	reducers: {
 		clearMessage: (state) => {
-			console.log({ state });
 			state.error = null;
 			state.data = null;
 		},
