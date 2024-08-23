@@ -4,7 +4,6 @@ import { Rating } from '@mui/material';
 import React from 'react';
 
 const ProductCard = ({ productInfo }) => {
-	console.log({ productInfo });
 	return (
 		<div class="card mt-4 me-2 cardWrraper">
 			<div className="imgWrraper">

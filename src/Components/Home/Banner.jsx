@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SliedBanner1 from '../../images/slideBanner1.jpg';
 import SliedBanner2 from '../../images/slideBanner2.jpg';
 import SliedBanner3 from '../../images/slideBanner3.jpg';
@@ -8,7 +8,12 @@ import SliedBanner6 from '../../images/slideBanner6.jpg';
 import SliedBanner7 from '../../images/slideBanner7.jpg';
 import Slider from 'react-slick';
 
+
 const Banner = () => {
+	
+
+	
+
 	var settings = {
 		dots: false,
 		infinite: true,

@@ -3,11 +3,10 @@ import axios from 'axios';
 import { baseUrl } from './registerSlice';
 
 export const loginFetch = createAsyncThunk('user/login', async (data) => {
-	
-
 	const res = await fetch(`${baseUrl}/api/v1/user/login`, {
 		method: 'POST',
-		withCredentials: true,
+		// redirect: 'follow',
+		credentials: 'include',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(data),
 	});

@@ -7,7 +7,9 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import { Toaster } from 'react-hot-toast';
 
-function App() {
+function App()
+{
+	
 	return (
 		<div>
 			<Header />

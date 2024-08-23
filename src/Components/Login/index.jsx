@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { errorToast, successToast } from '../../Utils/toast';
-import { clearMessage, loginFetch } from '../../Redux/Slice/loginSlice';
+import { baseUrl, errorToast, successToast } from '../../Utils/toast';
+import { useMutation } from 'react-query';
 
 const Login = () => {
 	const initialState = {
@@ -12,36 +11,36 @@ const Login = () => {
 
 	const [formValue, setFormValue] = useState(initialState);
 	const [formError, setFormError] = useState({});
-	const [isSubmit, setIsSubmit] = useState(false);
-	const dispatch = useDispatch();
-	const navigator = useNavigate();
-	const { loading, error, data } = useSelector((state) => state.login);
+	const navigate = useNavigate();
 
-	
+	const { data, mutate, isLoading, error } = useMutation({
+		mutationFn: async () => {
+			const res = await fetch(`${baseUrl}/api/v1/user/login`, {
+				method: 'POST',
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(formValue),
+			});
+
+			return res.json();
+		},
+	});
 
 	if (data?.success === true && data?.statusCode === 200) {
 		successToast(data?.message);
-		dispatch(clearMessage());
-		navigator('/');
+		setTimeout(() => {
+			navigate('/');
+		}, 2000);
 	}
 
 	if (error || (data?.success === false && data?.statusCode !== 200)) {
 		errorToast(error || data?.error);
-		dispatch(clearMessage());
 	}
 
 	const handelChange = (e) => {
 		const { name, value } = e.target;
 		setFormValue({ ...formValue, [name]: value });
 	};
-
-	useEffect(() => {
-		console.log({ formError });
-
-		if (Object.keys(formError).length === 0 && isSubmit) {
-			console.log({ formValue });
-		}
-	}, [formError]);
 
 	const validate = (values) => {
 		const errors = {};
@@ -61,8 +60,11 @@ const Login = () => {
 
 	const handelSubmit = (e) => {
 		setFormError(validate(formValue));
-		setIsSubmit(true);
-		dispatch(loginFetch(formValue));
+		if (formValue.email !== '' && formValue.password !== '') {
+			mutate(formValue);
+		} else {
+			errorToast('All Fields Are Required..');
+		}
 	};
 
 	return (
@@ -109,7 +111,13 @@ const Login = () => {
 				</form>
 
 				<button onClick={handelSubmit} className="secondary-font input-btn">
-					Login
+					{isLoading ? (
+						<div class="spinner-border text-light" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					) : (
+						'Login'
+					)}
 				</button>
 
 				<div className="mt-3">

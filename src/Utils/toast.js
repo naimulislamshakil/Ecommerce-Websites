@@ -1,5 +1,7 @@
 import toast from 'react-hot-toast';
 
+export const baseUrl = 'http://localhost:5000';
+
 export const loadingTost = (success) => {
 	toast.loading(success, {
 		position: 'top-center',

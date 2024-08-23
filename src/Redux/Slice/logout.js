@@ -1,19 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { baseUrl } from './registerSlice';
 
-export const baseUrl = 'http://localhost:5000';
-
-export const registerFetch = createAsyncThunk('auth/addUser', async (data) => {
-	const res = await fetch(`${baseUrl}/api/v1/user/register`, {
+export const logoutFetch = createAsyncThunk('user/logout', async () => {
+	const res = await fetch(`${baseUrl}/api/v1/user/logout`, {
 		method: 'POST',
-		credentials: 'include',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(data),
+		credentials: true,
 	});
 
-	const userData = await res.json();
+	const data = await res.json();
 
-	return userData;
+	return data;
 });
 
 const initialState = {
@@ -22,8 +18,8 @@ const initialState = {
 	error: null,
 };
 
-export const registerslice = createSlice({
-	name: 'github_issues',
+export const logoutSlice = createSlice({
+	name: 'logout',
 	initialState,
 	reducers: {
 		clearMessage: (state) => {
@@ -33,16 +29,16 @@ export const registerslice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(registerFetch.pending, (state) => {
+			.addCase(logoutFetch.pending, (state) => {
 				state.loading = true;
 				state.error = null;
 			})
-			.addCase(registerFetch.fulfilled, (state, action) => {
+			.addCase(logoutFetch.fulfilled, (state, action) => {
 				state.loading = false;
 				state.data = action.payload;
 				state.error = null;
 			})
-			.addCase(registerFetch.rejected, (state, action) => {
+			.addCase(logoutFetch.rejected, (state, action) => {
 				state.loading = false;
 				if (action.error.message === 'Request failed with status code 409') {
 					state.error = 'User Already Exist.';
@@ -54,6 +50,5 @@ export const registerslice = createSlice({
 	},
 });
 
-export const { clearMessage } = registerslice.actions;
-
-export default registerslice.reducer;
+// export const { clearMessage } = logoutFetch.actions;
+export default logoutFetch.reducer;

@@ -100,7 +100,7 @@ const Country = () => {
 
 				<ul className="upazila">
 					{upazilas?.map((upazila, i) => (
-						<li>
+						<li key={i}>
 							<Button onClick={() => selectZila(upazila?.district)}>
 								{upazila?.district}
 							</Button>

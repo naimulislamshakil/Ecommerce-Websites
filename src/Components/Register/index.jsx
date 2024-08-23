@@ -1,81 +1,94 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { clearMessage, registerFetch } from '../../Redux/Slice/registerSlice';
-import {
-	errorToast,
-	loadingTost,
-	successLoadingTost,
-	successToast,
-} from '../../Utils/toast';
+import React, { useEffect, useRef, useState } from 'react';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import { json, Link } from 'react-router-dom';
+import { errorToast } from '../../Utils/toast';
+import axios from '../../Utils/axios';
+
+const emailRegex =
+	/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+const nameRegex = /^[A-z][A-z" "]{3,23}$/;
+const registerUrl = '/api/v1/user/register';
 
 const Register = () => {
-	const initialState = {
-		name: '',
-		email: '',
-		password: '',
-	};
-	const [formValue, setFormValue] = useState(initialState);
-	const [formError, setFormError] = useState({});
-	const [isSubmit, setIsSubmit] = useState(false);
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	const { loading, error, data } = useSelector((state) => state.register);
+	const isLoading = false;
+	const userRef = useRef();
+	const errorRef = useRef();
 
-	console.log({ data, loading, error });
+	const [name, setName] = useState('');
+	const [validName, setValidName] = useState(false);
+	const [nameFocus, setNameFocus] = useState(false);
 
-	if (data?.success === true && data?.statusCode === 200) {
-		successToast(data?.message);
-		dispatch(clearMessage());
-		navigate('/login');
-	}
+	const [email, setEmail] = useState('');
+	const [validEmail, setValidEmail] = useState(false);
+	const [emailFocus, setEmailFocus] = useState(false);
 
-	if (
-		error === 'User Already Exist.' ||
-		data?.error === 'User Already Exist. Please Login..'
-	) {
-		navigate('/login');
-	}
+	const [password, setPassword] = useState('');
+	const [validPassword, setValidPassword] = useState(false);
+	const [passwordFocus, setPasswordFocus] = useState(false);
 
-	if (error || (data?.success === false && data?.statusCode !== 200)) {
-		errorToast(error || data?.error);
-		dispatch(clearMessage());
-	}
-
-	const handelChange = (e) => {
-		const { name, value } = e.target;
-		setFormValue({ ...formValue, [name]: value });
-	};
+	const [errMsg, setErrMsg] = useState('');
+	const [success, setSuccess] = useState(false);
 
 	useEffect(() => {
-		if (Object.keys(formError).length === 0 && isSubmit) {
-			console.log({ formValue });
-		}
-	}, [formError]);
+		userRef.current.focus();
+	}, []);
 
-	const validate = (values) => {
-		const errors = {};
-		const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]/;
+	useEffect(() => {
+		const result = nameRegex.test(name);
+		console.log({ result });
+		console.log({ name });
+		setValidName(result);
+	}, [name]);
 
-		if (!values?.name) {
-			errors.name = 'Name is required';
-		}
-		if (!values?.email) {
-			errors.email = 'Email is required';
-		} else if (!regex.test(values?.email)) {
-			errors.email = 'This is not a valid email';
-		}
-		if (!values?.password) {
-			errors.password = 'Password is required';
+	useEffect(() => {
+		const result = emailRegex.test(email);
+		console.log({ result });
+		console.log({ email });
+		setValidEmail(result);
+	}, [email]);
+
+	useEffect(() => {
+		const result = passwordRegex.test(password);
+		console.log({ result });
+		console.log({ password });
+		setValidPassword(result);
+	}, [password]);
+
+	useEffect(() => {
+		setErrMsg('');
+	}, [name, email, password]);
+
+	const handleSubmit = async () => {
+		const v1 = nameRegex.test(name);
+		const v2 = emailRegex.test(email);
+		const v3 = passwordRegex.test(password);
+
+		if (!v1 || !v2 || !v3) {
+			errorToast('Invalid Entry!');
+			return;
 		}
 
-		return errors;
-	};
+		try {
+			const responce = await axios.post(
+				registerUrl,
+				JSON.stringify({ name, email, password }),
+				{
+					headers: { 'Content-Type': 'application/json' },
+					withCredentials: true,
+				}
+			);
 
-	const handelSubmit = (e) => {
-		setFormError(validate(formValue));
-		setIsSubmit(true);
-		dispatch(registerFetch(formValue));
+			console.log({ responce });
+		} catch (error) {
+			if (!error.response) {
+				errorToast('No server Responce.');
+			} else if (error.response.status === 409) {
+				errorToast('Username Taken');
+			} else {
+				errorToast('Registration Failed!');
+			}
+		}
 	};
 
 	return (
@@ -88,55 +101,119 @@ const Register = () => {
 					Register
 				</h3>
 
-				<form autoComplete="off">
+				<form>
 					<div class="d-flex flex-column">
-						<label className="primary-font ms-1 input-label">Name *</label>
+						<label htmlFor="name" className="primary-font ms-1 input-label">
+							Name *
+						</label>
 						<input
 							type="text"
 							class="input primary-font"
-							name="name"
-							value={formValue?.name}
-							onChange={handelChange}
+							id="name"
+							ref={userRef}
+							autoComplete="off"
+							onChange={(e) => setName(e.target.value)}
+							required
+							aria-invalid={validName ? 'false' : 'true'}
+							aria-describedby="uidnote"
+							onFocus={() => setNameFocus(true)}
+							onBlur={() => setNameFocus(false)}
 						/>
-						<p className="mt-2 w-100 text-danger ms-2 mb-0">
-							{formError?.name}
+
+						<p
+							id="uidnote"
+							className={
+								nameFocus && name && !validName
+									? 'instructions secondary-font'
+									: 'offscreen'
+							}
+						>
+							<ErrorOutlineOutlinedIcon className="me-1" />
+							Name must be requierd!
 						</p>
 					</div>
 					<div class="d-flex flex-column mt-4">
-						<label className="primary-font ms-1 input-label">
+						<label htmlFor="email" className="primary-font ms-1 input-label">
 							Email Address *
 						</label>
 						<input
 							type="email"
-							name="email"
-							value={formValue?.email}
 							class="input primary-font"
-							onChange={handelChange}
+							id="email"
+							ref={userRef}
+							autoComplete="off"
+							onChange={(e) => setEmail(e.target.value)}
+							required
+							aria-invalid={validName ? 'false' : 'true'}
+							aria-describedby="uidnote"
+							onFocus={() => setEmailFocus(true)}
+							onBlur={() => setEmailFocus(false)}
 						/>
 
-						<p className="mt-2 w-100 text-danger ms-2 mb-0">
-							{formError?.email}
+						<p
+							id="uidnote"
+							className={
+								emailFocus && email && !validEmail
+									? 'instructions secondary-font'
+									: 'offscreen'
+							}
+						>
+							<ErrorOutlineOutlinedIcon className="me-1" />
+							Email must be requierd!
+							<br />
+							Enter in the format: formet@example.com
 						</p>
 					</div>
 					<div class="d-flex flex-column mt-4">
 						<label className="primary-font ms-1 input-label">Password *</label>
 						<input
 							type="password"
-							name="password"
-							value={formValue?.password}
 							class="input primary-font"
-							onChange={handelChange}
+							id="password"
+							ref={userRef}
+							autoComplete="off"
+							onChange={(e) => setPassword(e.target.value)}
+							required
+							aria-invalid={validName ? 'false' : 'true'}
+							aria-describedby="uidnote"
+							onFocus={() => setPasswordFocus(true)}
+							onBlur={() => setPasswordFocus(false)}
 						/>
 
-						<p className="mt-2 w-100 text-danger ms-2 mb-0">
-							{formError?.password}
+						<p
+							id="uidnote"
+							className={
+								passwordFocus && password && !validPassword
+									? 'instructions secondary-font'
+									: 'offscreen'
+							}
+						>
+							<ErrorOutlineOutlinedIcon className="me-1" />
+							Password length must be 8 to 24 characters.
+							<br />
+							Must include uppercase and lowercase letter.
+							<br />A number and a special character .<br />
+							Allowed special characters: ! @ # $ %
 						</p>
 					</div>
-				</form>
 
-				<button onClick={handelSubmit} className="secondary-font input-btn">
-					Register
-				</button>
+					<button
+						type="button"
+						disabled={
+							!validEmail || !validName || !validPassword ? true : false
+						}
+						className="secondary-font input-btn w-100"
+						onClick={handleSubmit}
+					>
+						{isLoading ? (
+							<div class="spinner-border text-light" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+						) : (
+							'Register'
+						)}
+					</button>
+				</form>
 
 				<div className="mt-3">
 					<span
