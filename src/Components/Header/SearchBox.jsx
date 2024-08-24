@@ -2,7 +2,9 @@ import { Button } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import React from 'react';
 
-const SearchBox = () => {
+const SearchBox = () =>
+{
+	
 	return (
 		<>
 			<div className="headerSearch">

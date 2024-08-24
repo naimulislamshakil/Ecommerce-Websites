@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import { json, Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { errorToast, successToast } from '../../Utils/toast';
 import axios from '../../Utils/axios';
 
@@ -33,22 +33,16 @@ const Register = () => {
 
 	useEffect(() => {
 		const result = nameRegex.test(name);
-		console.log({ result });
-		console.log({ name });
 		setValidName(result);
 	}, [name]);
 
 	useEffect(() => {
 		const result = emailRegex.test(email);
-		console.log({ result });
-		console.log({ email });
 		setValidEmail(result);
 	}, [email]);
 
 	useEffect(() => {
 		const result = passwordRegex.test(password);
-		console.log({ result });
-		console.log({ password });
 		setValidPassword(result);
 	}, [password]);
 
@@ -63,7 +57,7 @@ const Register = () => {
 			setIsLoading(false);
 			return;
 		}
-
+console.log({name,password,email});
 		try {
 			const responce = await axios.post(
 				registerUrl,
@@ -84,10 +78,13 @@ const Register = () => {
 			}
 		} catch (error) {
 			if (!error.response) {
+				setIsLoading(false);
 				errorToast('No server Responce.');
 			} else if (error.response.status === 409) {
+				setIsLoading(false);
 				errorToast('Username Taken');
 			} else {
+				setIsLoading(false);
 				errorToast('Registration Failed!');
 			}
 		}

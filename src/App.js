@@ -6,17 +6,25 @@ import Footer from './Components/Footer/Footer';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import { Toaster } from 'react-hot-toast';
+import Layout from './Components/Layout';
+import RequierdAuth from './Components/RequierdAuth';
+import UnAuthorized from './Components/UnAuthorized';
 
-function App()
-{
-	
+function App() {
 	return (
 		<div>
 			<Header />
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
+				<Route path="/" element={<Layout />}>
+					<Route path="login" element={<Login />} />
+					<Route path="register" element={<Register />} />
+					<Route path="unauthorized" element={<UnAuthorized />} />
+
+					{/* Protected Route */}
+					<Route element={<RequierdAuth allowedRole={['user']} />}>
+						<Route path="/" element={<Home />} />
+					</Route>
+				</Route>
 			</Routes>
 			<Footer />
 			<Toaster />

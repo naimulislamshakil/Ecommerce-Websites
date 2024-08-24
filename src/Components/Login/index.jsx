@@ -1,19 +1,22 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from '../../Utils/axios';
-import AuthContext from '../../Context/AuthProvider';
 import { errorToast } from '../../Utils/toast';
+import useAuth from '../../Hooks/useAuth';
 
 const LOGIN_URL = '/api/v1/user/login';
 
 const Login = () => {
-	const { setAuth } = useContext(AuthContext);
+	const { setAuth } = useAuth();
 	const [isLoading, setIsLoading] = useState(false);
 	const userRef = useRef();
 
+	const navigate = useNavigate();
+	const location = useLocation();
+	const from = location.state?.from?.pathname || '/';
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [success, setSuccess] = useState(false);
 
 	useEffect(() => {
 		userRef.current.focus();
@@ -37,12 +40,11 @@ const Login = () => {
 			const refreshToken = responce?.data?.data?.refreshToken;
 			const user = responce?.data?.data?.user;
 
-			console.log({ accessToken, refreshToken, user });
-
 			setAuth({ accessToken, refreshToken, user });
 			setIsLoading(false);
 			setEmail('');
 			setPassword('');
+			navigate(from, { replace: true });
 		} catch (err) {
 			if (!err?.response) {
 				setIsLoading(false);
