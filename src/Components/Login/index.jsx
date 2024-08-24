@@ -1,69 +1,62 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { baseUrl, errorToast, successToast } from '../../Utils/toast';
-import { useMutation } from 'react-query';
+import axios from '../../Utils/axios';
+import AuthContext from '../../Context/AuthProvider';
+import { errorToast } from '../../Utils/toast';
+
+const LOGIN_URL = '/api/v1/user/login';
 
 const Login = () => {
-	const initialState = {
-		email: '',
-		password: '',
-	};
+	const { setAuth } = useContext(AuthContext);
+	const [isLoading, setIsLoading] = useState(false);
+	const userRef = useRef();
 
-	const [formValue, setFormValue] = useState(initialState);
-	const [formError, setFormError] = useState({});
-	const navigate = useNavigate();
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [success, setSuccess] = useState(false);
 
-	const { data, mutate, isLoading, error } = useMutation({
-		mutationFn: async () => {
-			const res = await fetch(`${baseUrl}/api/v1/user/login`, {
-				method: 'POST',
-				credentials: 'include',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(formValue),
-			});
+	useEffect(() => {
+		userRef.current.focus();
+	}, []);
 
-			return res.json();
-		},
-	});
+	const handelSubmit = async () => {
+		setIsLoading(true);
+		try {
+			const responce = await axios.post(
+				LOGIN_URL,
+				JSON.stringify({ email, password }),
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					withCredentials: true,
+				}
+			);
 
-	if (data?.success === true && data?.statusCode === 200) {
-		successToast(data?.message);
-		setTimeout(() => {
-			navigate('/');
-		}, 2000);
-	}
+			const accessToken = responce?.data?.data?.accessToken;
+			const refreshToken = responce?.data?.data?.refreshToken;
+			const user = responce?.data?.data?.user;
 
-	if (error || (data?.success === false && data?.statusCode !== 200)) {
-		errorToast(error || data?.error);
-	}
+			console.log({ accessToken, refreshToken, user });
 
-	const handelChange = (e) => {
-		const { name, value } = e.target;
-		setFormValue({ ...formValue, [name]: value });
-	};
-
-	const validate = (values) => {
-		const errors = {};
-		const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]/;
-
-		if (!values?.email) {
-			errors.email = 'Email is required';
-		} else if (!regex.test(values?.email)) {
-			errors.email = 'This is not a valid email';
-		}
-		if (!values?.password) {
-			errors.password = 'Password is required';
-		}
-
-		return errors;
-	};
-
-	const handelSubmit = (e) => {
-		setFormError(validate(formValue));
-		if (formValue.email !== '' && formValue.password !== '') {
-			mutate(formValue);
-		} else {
-			errorToast('All Fields Are Required..');
+			setAuth({ accessToken, refreshToken, user });
+			setIsLoading(false);
+			setEmail('');
+			setPassword('');
+		} catch (err) {
+			if (!err?.response) {
+				setIsLoading(false);
+				errorToast('No Server Response');
+			} else if (err.response?.status === 400) {
+				setIsLoading(false);
+				errorToast('Missing Name or Password');
+			} else if (err.response?.status === 401) {
+				setIsLoading(false);
+				errorToast('Unauthorized');
+			} else {
+				setIsLoading(false);
+				errorToast('Login Failed');
+			}
 		}
 	};
 
@@ -84,41 +77,43 @@ const Login = () => {
 						</label>
 						<input
 							type="email"
-							name="email"
-							value={formValue?.email}
-							onChange={handelChange}
 							class="input primary-font"
+							id="email"
+							ref={userRef}
+							autoComplete="off"
+							onChange={(e) => setEmail(e.target.value)}
+							value={email}
+							required
 						/>
-
-						<p className="mt-2 w-100 text-danger ms-2 mb-0">
-							{formError?.email}
-						</p>
 					</div>
 					<div class="d-flex flex-column mt-4">
 						<label className="primary-font ms-1 input-label">Password *</label>
 						<input
 							type="password"
-							name="password"
-							value={formValue?.password}
-							onChange={handelChange}
 							class="input primary-font"
+							id="password"
+							ref={userRef}
+							autoComplete="off"
+							onChange={(e) => setPassword(e.target.value)}
+							value={password}
+							required
 						/>
-
-						<p className="mt-2 w-100 text-danger ms-2 mb-0">
-							{formError?.password}
-						</p>
 					</div>
+					<button
+						type="button"
+						disabled={!email || !password ? true : false}
+						onClick={handelSubmit}
+						className="secondary-font input-btn w-100"
+					>
+						{isLoading ? (
+							<div class="spinner-border text-light" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+						) : (
+							'Login'
+						)}
+					</button>
 				</form>
-
-				<button onClick={handelSubmit} className="secondary-font input-btn">
-					{isLoading ? (
-						<div class="spinner-border text-light" role="status">
-							<span class="visually-hidden">Loading...</span>
-						</div>
-					) : (
-						'Login'
-					)}
-				</button>
 
 				<div className="mt-3">
 					<span

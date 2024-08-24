@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import { json, Link } from 'react-router-dom';
-import { errorToast } from '../../Utils/toast';
+import { json, Link, useNavigate } from 'react-router-dom';
+import { errorToast, successToast } from '../../Utils/toast';
 import axios from '../../Utils/axios';
 
 const emailRegex =
@@ -11,9 +11,9 @@ const nameRegex = /^[A-z][A-z" "]{3,23}$/;
 const registerUrl = '/api/v1/user/register';
 
 const Register = () => {
-	const isLoading = false;
+	const [isLoading, setIsLoading] = useState(false);
 	const userRef = useRef();
-	const errorRef = useRef();
+	const navigate = useNavigate();
 
 	const [name, setName] = useState('');
 	const [validName, setValidName] = useState(false);
@@ -26,9 +26,6 @@ const Register = () => {
 	const [password, setPassword] = useState('');
 	const [validPassword, setValidPassword] = useState(false);
 	const [passwordFocus, setPasswordFocus] = useState(false);
-
-	const [errMsg, setErrMsg] = useState('');
-	const [success, setSuccess] = useState(false);
 
 	useEffect(() => {
 		userRef.current.focus();
@@ -55,17 +52,15 @@ const Register = () => {
 		setValidPassword(result);
 	}, [password]);
 
-	useEffect(() => {
-		setErrMsg('');
-	}, [name, email, password]);
-
 	const handleSubmit = async () => {
+		setIsLoading(true);
 		const v1 = nameRegex.test(name);
 		const v2 = emailRegex.test(email);
 		const v3 = passwordRegex.test(password);
 
 		if (!v1 || !v2 || !v3) {
 			errorToast('Invalid Entry!');
+			setIsLoading(false);
 			return;
 		}
 
@@ -79,7 +74,14 @@ const Register = () => {
 				}
 			);
 
-			console.log({ responce });
+			if (
+				responce.data?.statusCode === 200 &&
+				responce.data?.success === true
+			) {
+				setIsLoading(false);
+				successToast(responce.data?.message);
+				navigate('/login');
+			}
 		} catch (error) {
 			if (!error.response) {
 				errorToast('No server Responce.');
