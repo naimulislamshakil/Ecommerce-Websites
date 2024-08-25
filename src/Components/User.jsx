@@ -3,40 +3,39 @@ import axios from '../Utils/axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import useAxoisPrivate from '../Hooks/useAxiosPrivet';
+import useAuth from '../Hooks/useAuth';
+import useRefreshToken from '../Hooks/useRefreshToken';
+
+const GET_USER_URL = '/api/v1/user/current_user';
 
 const User = () => {
-	const [user, setUser] = useState();
-	const axiosPrivate = useAxoisPrivate();
-	const navigate = useNavigate();
-	const location = useLocation();
+	const { auth, setAuth } = useAuth();
 
 	useEffect(() => {
-		let isMounted = true;
-		const controller = new AbortController();
-
 		const getUser = async () => {
-			try {
-				const res = await axiosPrivate.get('/api/v1/user/current_user', {
-					signal: controller.signal,
-				});
+			const res = await axios.get(GET_USER_URL, {
+				withCredentials: true,
+			});
 
-				isMounted && setUser(res?.data?.data?.user);
-			} catch (error) {
-				navigate('/login', { state: { from: location }, replace: true });
+			const user = res?.data?.data?.user;
+
+			if (user) {
+				setAuth((prev) => {
+					return {
+						...prev,
+						user,
+					};
+				});
 			}
 		};
 
 		getUser();
+	}, []);
 
-		return () => {
-			isMounted = false;
-			controller.abort();
-		};
-	}, [axiosPrivate]);
-
+	// console.log({ user });
 	return (
 		<>
-			{user ? (
+			{auth?.user ? (
 				<div className="subMenu shadow rounded">
 					<li>
 						<Link to="/my_profile" className="text-decoration-none text-dark">

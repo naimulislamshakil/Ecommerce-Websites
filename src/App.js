@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import Layout from './Components/Layout';
 import RequierdAuth from './Components/RequierdAuth';
 import UnAuthorized from './Components/UnAuthorized';
+import PersistentLogin from './Components/PersistentLogin';
 
 function App() {
 	return (
@@ -21,8 +22,10 @@ function App() {
 					<Route path="unauthorized" element={<UnAuthorized />} />
 
 					{/* Protected Route */}
-					<Route element={<RequierdAuth allowedRole={['user']} />}>
-						<Route path="/" element={<Home />} />
+					<Route element={<PersistentLogin />}>
+						<Route element={<RequierdAuth allowedRole={['user']} />}>
+							<Route path="/" element={<Home />} />
+						</Route>
 					</Route>
 				</Route>
 			</Routes>
