@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 const PersistentLogin = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const refresh = useRefreshToken();
-	const { auth, setAuth } = useAuth();
+	const { auth } = useAuth();
 
 	useEffect(() => {
 		let isMounted = true;
@@ -28,11 +28,6 @@ const PersistentLogin = () => {
 
 		return () => (isMounted = false);
 	}, []);
-
-	useEffect(() => {
-		console.log(`isLoading: ${isLoading}`);
-		console.log(`aT: ${JSON.stringify(auth?.accessToken)}`);
-	}, [isLoading]);
 
 	return (
 		<>

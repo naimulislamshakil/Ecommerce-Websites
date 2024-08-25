@@ -10,6 +10,7 @@ import Layout from './Components/Layout';
 import RequierdAuth from './Components/RequierdAuth';
 import UnAuthorized from './Components/UnAuthorized';
 import PersistentLogin from './Components/PersistentLogin';
+import Dashboard from './Components/DashBoard/index.jsx';
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path="/" element={<Layout />}>
+					<Route path="/" element={<Home />} />
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />
 					<Route path="unauthorized" element={<UnAuthorized />} />
@@ -24,7 +26,7 @@ function App() {
 					{/* Protected Route */}
 					<Route element={<PersistentLogin />}>
 						<Route element={<RequierdAuth allowedRole={['user']} />}>
-							<Route path="/" element={<Home />} />
+							<Route path="/dashboard" element={<Dashboard />} />
 						</Route>
 					</Route>
 				</Route>
