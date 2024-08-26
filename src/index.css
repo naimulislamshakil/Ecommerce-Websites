@@ -419,3 +419,17 @@ ul li:hover .subMenu {
 button:disabled {
 	background-color: #6373b3 !important;
 }
+
+/* Dashboard sidebar */
+
+.sidebar_hight {
+	height: 90vh !important;
+	margin-top: 10px;
+}
+
+.dashboard_active {
+	background-image: linear-gradient(#c5cae9, #9fa8da);
+	padding: 5px;
+	border-radius: 5px;
+	width: 100% !important;
+}

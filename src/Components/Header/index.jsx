@@ -45,10 +45,7 @@ const Header = () => {
 									>
 										<li className="list-inline-item">
 											<Button className="profile">
-												<AccountCircleOutlinedIcon
-													style={{ fontSize: '30px' }}
-													className="text-black"
-												/>
+												<AccountCircleOutlinedIcon className="text-black" />
 											</Button>
 
 											<User />

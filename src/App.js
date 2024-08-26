@@ -11,6 +11,9 @@ import RequierdAuth from './Components/RequierdAuth';
 import UnAuthorized from './Components/UnAuthorized';
 import PersistentLogin from './Components/PersistentLogin';
 import Dashboard from './Components/DashBoard/index.jsx';
+import MyProfile from './Components/DashBoard/MyProfile.jsx';
+import MyOrder from './Components/DashBoard/MyOrder.jsx';
+import MyWishlist from './Components/DashBoard/MyWishlist.jsx';
 
 function App() {
 	return (
@@ -26,7 +29,11 @@ function App() {
 					{/* Protected Route */}
 					<Route element={<PersistentLogin />}>
 						<Route element={<RequierdAuth allowedRole={['user']} />}>
-							<Route path="/dashboard" element={<Dashboard />} />
+							<Route path="/" element={<Dashboard />}>
+								<Route path="my_profile" element={<MyProfile />} />
+								<Route path="my_order" element={<MyOrder />} />
+								<Route path="my_wishlist" element={<MyWishlist />} />
+							</Route>
 						</Route>
 					</Route>
 				</Route>

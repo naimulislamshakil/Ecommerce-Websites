@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from '../Utils/axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
@@ -59,7 +59,7 @@ const User = () => {
 			{auth?.user ? (
 				<div className="subMenu shadow rounded">
 					<li>
-						<Link to="/dashboard" className="text-decoration-none text-dark">
+						<Link to="/my_profile" className="text-decoration-none text-dark">
 							<Button>My Dashboard</Button>
 						</Link>
 					</li>
@@ -78,6 +78,11 @@ const User = () => {
 				</div>
 			) : (
 				<div className="subMenu shadow rounded">
+					<li>
+						<Link to="/my_profile" className="text-decoration-none text-dark">
+							<Button>My Dashboard</Button>
+						</Link>
+					</li>
 					<li>
 						<Link to="/login" className="text-decoration-none text-dark">
 							<Button>Login</Button>
