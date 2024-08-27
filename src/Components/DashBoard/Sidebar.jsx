@@ -10,17 +10,17 @@ const Sidebar = ({ children }) => {
 			<aside className="h-100">
 				<nav className="h-100 d-flex flex-column bg-white border-end shadow-md">
 					<div className="p-4 pb-2 flex justify-content-between align-items-center">
-						<h5 className="secondary-font">
+						<h5 className="primary-font">
 							Hello, {auth?.user?.name.split(' ')[0]}
 						</h5>
 					</div>
 
-					<ul className="flex-1 px-3">{children}</ul>
+					<ul className="flex-1 px-3 border-top">{children}</ul>
 
 					<div className="border-top d-flex p-3 justify-content-between">
 						<div>
-							<h5 className="secondary-font">{auth?.user?.name}</h5>
-							<p className="secondary-font">{auth?.user?.email}</p>
+							<h5 className="primary-font">{auth?.user?.name}</h5>
+							<p className="primary-font">{auth?.user?.email}</p>
 						</div>
 						<MoreVertOutlinedIcon style={{ fontSize: '20px' }} />
 					</div>
@@ -32,10 +32,10 @@ const Sidebar = ({ children }) => {
 
 export function SidebarItem({ icon, text, active, alert, link }) {
 	return (
-		<li className="list-inline-item w-100 mb-3">
+		<li className="list-inline-item w-100 mt-4">
 			<Link
 				className={`text-decoration-none text-dark secondary-font d-flex align-items-center ${
-					active && 'dashboard_active'
+					active && 'bg-success p-2 text-white rounded'
 				}`}
 				style={{ fontSize: '16px' }}
 				to={link}
