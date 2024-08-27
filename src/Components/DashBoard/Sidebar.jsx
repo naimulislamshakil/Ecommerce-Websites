@@ -17,7 +17,7 @@ const Sidebar = ({ children }) => {
 
 					<ul className="flex-1 px-3 border-top">{children}</ul>
 
-					<div className="border-top d-flex p-3 justify-content-between">
+					<div className="border-top d-flex p-3 justify-content-between mt-auto border-bottom">
 						<div>
 							<h5 className="primary-font">{auth?.user?.name}</h5>
 							<p className="primary-font">{auth?.user?.email}</p>

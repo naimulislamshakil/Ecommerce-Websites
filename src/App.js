@@ -17,6 +17,7 @@ import MyWishlist from './Components/DashBoard/MyWishlist.jsx';
 import Settings from './Components/DashBoard/Settings.jsx';
 import Help from './Components/DashBoard/Help.jsx';
 import AddressBook from './Components/DashBoard/AddressBook.jsx';
+import ApplyAsVendor from './Components/DashBoard/ApplyAsVendor.jsx';
 
 function App() {
 	return (
@@ -37,6 +38,7 @@ function App() {
 								<Route path="address_book" element={<AddressBook />} />
 								<Route path="my_order" element={<MyOrder />} />
 								<Route path="my_wishlist" element={<MyWishlist />} />
+								<Route path="apply_as_vendor" element={<ApplyAsVendor />} />
 								<Route path="settings" element={<Settings />} />
 								<Route path="help" element={<Help />} />
 							</Route>

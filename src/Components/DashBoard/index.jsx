@@ -9,6 +9,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import ImportContactsOutlinedIcon from '@mui/icons-material/ImportContactsOutlined';
+import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
 import { successToast } from '../../Utils/toast';
 import axios from '../../Utils/axios';
 import useAuth from '../../Hooks/useAuth';
@@ -67,6 +68,12 @@ const index = () => {
 							text="My Wishlist"
 							link="/my_wishlist"
 							active={currentLocation === '/my_wishlist'}
+						/>
+						<SidebarItem
+							icon={<DraftsOutlinedIcon style={{ fontSize: '24px' }} />}
+							text="Apply As a Vendor"
+							link="/apply_as_vendor"
+							active={currentLocation === '/apply_as_vendor'}
 						/>
 
 						<div className="border-top mt-4">

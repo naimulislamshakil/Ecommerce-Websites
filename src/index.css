@@ -433,3 +433,10 @@ button:disabled {
 	border-radius: 5px;
 	width: 100% !important;
 }
+
+.step {
+	background-color: #a5d6a7;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+}
